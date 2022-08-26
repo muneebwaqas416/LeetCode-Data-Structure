@@ -1,0 +1,38 @@
+int pairSum(ListNode* head) {
+        int count = 0;
+        ListNode * temp  = head;
+        while(temp->next!=nullptr)
+        {
+            count++;
+            temp = temp->next;
+        }
+        int size = count+1;
+        int *arr = new int [size];
+        temp = nullptr;
+        temp = head;
+        int i=0;
+        while(temp!=nullptr)
+        {
+            arr[i] = temp->val;
+            i++;
+            temp = temp->next;
+        }        
+        temp = nullptr;
+        temp = head;
+        int sum = 0;
+        i = 0;
+        while(temp->next!=nullptr && i<=(size/2))
+        {
+            int index = (size-1-i);
+            int q = temp->val + arr[index];
+            cout << index ;
+            //cout << temp->val << arr[index] << endl;
+            if(q>sum)
+            {
+                sum = q;
+            }
+            i++;
+            temp = temp->next;
+        }
+        return sum;
+    }

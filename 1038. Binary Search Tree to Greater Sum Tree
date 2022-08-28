@@ -1,0 +1,69 @@
+void Visit(TreeNode * &root_original,int & val , int & sum)
+    {
+        if(root_original==nullptr)
+        {
+            return;
+        }else
+        {
+            if(root_original->val>=val)
+            {
+                cout << sum << endl;
+                sum += root_original->val;
+            }
+            Visit(root_original->left,val,sum);
+            Visit(root_original->right,val,sum);
+        }
+    }
+    void Insert(TreeNode *& root,int sum)
+    {
+        if(root==NULL)
+        {
+            root = new TreeNode(sum);
+        }else if(sum<root->val)
+        {
+            Insert(root->left,sum);
+        }else if(sum>root->val)
+        {
+            Insert(root->right,sum);
+        }
+    }
+    int sum = 0;
+    void Call(TreeNode *& root,TreeNode *& root_2)
+    {
+        if(root_2==nullptr)
+        {
+            return;
+        }else
+        {
+            Visit(root,root_2->val,sum);
+            cout << sum << endl;
+            root_2->val = sum;
+            sum = 0;
+        }
+        Call(root,root_2->left);
+        Call(root,root_2->right);
+    }
+    TreeNode *root_new = nullptr;
+    void Deepcopy(TreeNode * &root)
+    {
+        if(root==NULL)
+        {
+            return;
+        }else
+        {
+            Insert(root_new,root->val);
+        }
+        Deepcopy(root->left);
+        Deepcopy(root->right);
+    }
+    TreeNode* bstToGst(TreeNode* root) {
+        if(root==nullptr)
+        {
+            return nullptr;
+        }else
+        {
+            Deepcopy(root);
+            Call(root_new,root);
+        }
+        return root;
+    }

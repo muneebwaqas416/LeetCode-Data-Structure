@@ -1,0 +1,47 @@
+int partition(vector<int>&arr , int low , int high)
+    {
+        int pivot = arr[high];
+        int i = (low-1);
+        for(int j=low ; j<=high-1 ; j++)
+        {
+            if(arr[j]<=pivot)
+            {
+                i++;
+                swap(arr[i],arr[j]);
+            }
+        }
+        swap(arr[i+1],arr[high]);
+        return(i+1);
+    }
+    void Quicksort(vector<int>& arr , int low , int high)
+    {
+        if(low<high)
+        {
+            int pi = partition(arr,low,high);
+            Quicksort(arr,low,pi-1);
+            Quicksort(arr,pi+1,high);
+        }
+    }
+    int i=0;
+    void Inorder(TreeNode *& root , vector<int>& arr)
+    {
+        
+        if(root==nullptr)
+        {
+            return;
+        }else
+        {
+            arr[i] = root->val;
+            i++;
+            Inorder(root->left,arr);
+            Inorder(root->right,arr);
+        }
+    }
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int>arr(10000);
+        Inorder(root1,arr);
+        Inorder(root2,arr);
+        arr.resize(i);
+        Quicksort(arr,0,i-1);
+        return arr;
+    }
